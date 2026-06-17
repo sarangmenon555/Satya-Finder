@@ -14,7 +14,7 @@ npm run dev
 
 | Variable | Description |
 |---|---|
-| `VITE_BACKEND_URL` | URL of the FastAPI backend (e.g. https://satyafinder-api.onrender.com) |
+| `VITE_BACKEND_URL` | URL of the FastAPI backend (e.g. https://satyafinder-backend.onrender.com) |
 
 ## Backend Contract
 
