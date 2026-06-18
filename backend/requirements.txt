@@ -1,0 +1,10 @@
+httpx
+fastapi
+uvicorn
+pymongo
+python-dotenv
+python-multipart
+sentence-transformers
+pydantic-settings
+pydantic
+bson
