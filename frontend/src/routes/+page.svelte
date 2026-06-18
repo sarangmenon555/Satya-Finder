@@ -35,7 +35,7 @@
       heroBadge: 'AI-powered · Karnataka DSEL sources',
       heroTitle1: 'Is that circular',
       heroTitleAccent: 'real?',
-      heroSubtitle: 'Got a WhatsApp forward about school closures, exam dates, or fee changes? Paste it below. SatyaFinder cross-checks it against Karnataka Education Department sources in seconds.',
+      heroSubtitle: 'Got a WhatsApp forward about school closures, exam dates, or fee changes? Paste it below. Satya Finder cross-checks it against Karnataka Education Department sources in seconds.',
       inputLabel: 'Claim or message text',
       placeholder: 'Type a claim or circular... e.g. Schools are closed on Monday due to heavy rain',
       inputHint: 'Ctrl + Enter to check',
@@ -46,7 +46,7 @@
       checkBtn: 'Check this claim',
       checking: 'Analysing claim...',
       remove: 'Remove',
-      disclaimer: 'SatyaFinder does not make legal or administrative decisions. Always verify with your school or the Karnataka DSEL portal.',
+      disclaimer: 'Satya Finder does not make legal or administrative decisions. Always verify with your school or the Karnataka DSEL portal.',
       errorEmpty: 'Enter a claim or upload an image to check.',
       processingMsg: 'Still processing — the result may update. Try again in a moment.',
       flaggedMsg: 'This claim has been flagged for human review. Treat the AI result below as preliminary only.',
@@ -54,9 +54,9 @@
       confidence: 'Confidence',
       sourcesChecked: 'Sources checked',
       humanTitle: 'Human review recommended',
-      humanText: 'SatyaFinder flags and explains — it does not make final decisions. For school closures, exam dates, or fee changes, confirm directly with your school principal or the Karnataka DSEL portal.',
+      humanText: 'Satya Finder flags and explains — it does not make final decisions. For school closures, exam dates, or fee changes, confirm directly with your school principal or the Karnataka DSEL portal.',
       checkAnother: 'Check another claim',
-      footerMain: 'SatyaFinder · Karnataka Education Fact Checker · Built for USAII Global AI Hackathon 2026',
+      footerMain: 'Satya Finder · Karnataka Education Fact Checker · Built for USAII Global AI Hackathon 2026',
       footerSub: 'AI output may be incorrect. Always verify with official sources.',
       hiwBadge: 'Process',
       hiwTitle: 'How it works',
@@ -83,7 +83,7 @@
         {
           number: '02',
           title: 'AI Analyses the Claim',
-          desc: 'SatyaFinder uses a large language model to parse the claim, extract key facts, and identify what needs verification.',
+          desc: 'Satya Finder uses a large language model to parse the claim, extract key facts, and identify what needs verification.',
         },
         {
           number: '03',
@@ -101,7 +101,7 @@
       heroBadge: 'AI-ಆಧಾರಿತ · Karnataka DSEL ಮೂಲಗಳು',
       heroTitle1: 'ಆ circular',
       heroTitleAccent: 'ನಿಜವೇ?',
-      heroSubtitle: 'ಶಾಲೆ ಮುಚ್ಚುವಿಕೆ, ಪರೀಕ್ಷಾ ದಿನಾಂಕಗಳು ಅಥವಾ ಶುಲ್ಕ ಬದಲಾವಣೆಯ ಬಗ್ಗೆ WhatsApp ಸಂದೇಶ ಬಂದಿದೆಯೇ? ಕೆಳಗೆ ಅಂಟಿಸಿ. SatyaFinder ಅದನ್ನು Karnataka ಶಿಕ್ಷಣ ಇಲಾಖೆಯ ಮೂಲಗಳೊಂದಿಗೆ ಕ್ಷಣಾರ್ಧದಲ್ಲಿ ಪರಿಶೀಲಿಸುತ್ತದೆ.',
+      heroSubtitle: 'ಶಾಲೆ ಮುಚ್ಚುವಿಕೆ, ಪರೀಕ್ಷಾ ದಿನಾಂಕಗಳು ಅಥವಾ ಶುಲ್ಕ ಬದಲಾವಣೆಯ ಬಗ್ಗೆ WhatsApp ಸಂದೇಶ ಬಂದಿದೆಯೇ? ಕೆಳಗೆ ಅಂಟಿಸಿ. Satya Finder ಅದನ್ನು Karnataka ಶಿಕ್ಷಣ ಇಲಾಖೆಯ ಮೂಲಗಳೊಂದಿಗೆ ಕ್ಷಣಾರ್ಧದಲ್ಲಿ ಪರಿಶೀಲಿಸುತ್ತದೆ.',
       inputLabel: 'ಸಂದೇಶ ಅಥವಾ ಹೇಳಿಕೆ ಟೈಪ್ ಮಾಡಿ',
       placeholder: 'ಒಂದು ಸುದ್ದಿ ಅಥವಾ circular ಟೈಪ್ ಮಾಡಿ... ಉದಾ: ಮಳೆಯ ಕಾರಣ ಸೋಮವಾರ ಶಾಲೆಗಳಿಗೆ ರಜೆ',
       inputHint: 'Ctrl + Enter ಒತ್ತಿ ಪರಿಶೀಲಿಸಿ',
@@ -112,7 +112,7 @@
       checkBtn: 'ಹೇಳಿಕೆ ಪರಿಶೀಲಿಸಿ',
       checking: 'ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...',
       remove: 'ತೆಗೆದುಹಾಕಿ',
-      disclaimer: 'SatyaFinder ಕಾನೂನು ಅಥವಾ ಆಡಳಿತಾತ್ಮಕ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುವುದಿಲ್ಲ. ಯಾವಾಗಲೂ ನಿಮ್ಮ ಶಾಲೆ ಅಥವಾ Karnataka DSEL ಪೋರ್ಟಲ್ ಮೂಲಕ ದೃಢೀಕರಿಸಿ.',
+      disclaimer: 'Satya Finder ಕಾನೂನು ಅಥವಾ ಆಡಳಿತಾತ್ಮಕ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುವುದಿಲ್ಲ. ಯಾವಾಗಲೂ ನಿಮ್ಮ ಶಾಲೆ ಅಥವಾ Karnataka DSEL ಪೋರ್ಟಲ್ ಮೂಲಕ ದೃಢೀಕರಿಸಿ.',
       errorEmpty: 'ಪರಿಶೀಲಿಸಲು ಹೇಳಿಕೆ ನಮೂದಿಸಿ ಅಥವಾ ಚಿತ್ರ ಅಪ್ಲೋಡ್ ಮಾಡಿ.',
       processingMsg: 'ಇನ್ನೂ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ — ಫಲಿತಾಂಶ ಶೀಘ್ರದಲ್ಲೇ ನವೀಕರಣಗೊಳ್ಳಬಹುದು.',
       flaggedMsg: 'ಈ ಹೇಳಿಕೆಯನ್ನು ಮಾನವ ಪರಿಶೀಲನೆಗೆ ಗುರುತಿಸಲಾಗಿದೆ. ಕೆಳಗಿನ AI ಫಲಿತಾಂಶವನ್ನು ಪ್ರಾಥಮಿಕ ಮಾತ್ರ ಎಂದು ಪರಿಗಣಿಸಿ.',
@@ -120,9 +120,9 @@
       confidence: 'ವಿಶ್ವಾಸ ಮಟ್ಟ',
       sourcesChecked: 'ಪರಿಶೀಲಿಸಿದ ಮೂಲಗಳು',
       humanTitle: 'ಮಾನವ ಪರಿಶೀಲನೆ ಶಿಫಾರಸು',
-      humanText: 'SatyaFinder ಸೂಚಿಸುತ್ತದೆ ಮತ್ತು ವಿವರಿಸುತ್ತದೆ — ಅಂತಿಮ ನಿರ್ಧಾರ ತೆಗೆದುಕೊಳ್ಳುವುದಿಲ್ಲ. ಶಾಲೆ ಮುಚ್ಚುವಿಕೆ, ಪರೀಕ್ಷಾ ದಿನಾಂಕಗಳು ಅಥವಾ ಶುಲ್ಕ ಬದಲಾವಣೆಗಳಿಗೆ, ನೇರವಾಗಿ ನಿಮ್ಮ ಮುಖ್ಯೋಪಾಧ್ಯಾಯರನ್ನು ಅಥವಾ Karnataka DSEL ಪೋರ್ಟಲ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.',
+      humanText: 'Satya Finder ಸೂಚಿಸುತ್ತದೆ ಮತ್ತು ವಿವರಿಸುತ್ತದೆ — ಅಂತಿಮ ನಿರ್ಧಾರ ತೆಗೆದುಕೊಳ್ಳುವುದಿಲ್ಲ. ಶಾಲೆ ಮುಚ್ಚುವಿಕೆ, ಪರೀಕ್ಷಾ ದಿನಾಂಕಗಳು ಅಥವಾ ಶುಲ್ಕ ಬದಲಾವಣೆಗಳಿಗೆ, ನೇರವಾಗಿ ನಿಮ್ಮ ಮುಖ್ಯೋಪಾಧ್ಯಾಯರನ್ನು ಅಥವಾ Karnataka DSEL ಪೋರ್ಟಲ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.',
       checkAnother: 'ಮತ್ತೊಂದು ಹೇಳಿಕೆ ಪರಿಶೀಲಿಸಿ',
-      footerMain: 'SatyaFinder · Karnataka ಶಿಕ್ಷಣ Fact Checker · USAII Global AI Hackathon 2026',
+      footerMain: 'Satya Finder · Karnataka ಶಿಕ್ಷಣ Fact Checker · USAII Global AI Hackathon 2026',
       footerSub: 'AI ಔಟ್‌ಪುಟ್ ತಪ್ಪಾಗಿರಬಹುದು. ಯಾವಾಗಲೂ ಅಧಿಕೃತ ಮೂಲಗಳೊಂದಿಗೆ ಪರಿಶೀಲಿಸಿ.',
       hiwBadge: 'ಪ್ರಕ್ರಿಯೆ',
       hiwTitle: 'ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ',
@@ -149,7 +149,7 @@
         {
           number: '02',
           title: 'AI ಹೇಳಿಕೆ ವಿಶ್ಲೇಷಿಸುತ್ತದೆ',
-          desc: 'SatyaFinder ಹೇಳಿಕೆಯನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು, ಪ್ರಮುಖ ಸಂಗತಿಗಳನ್ನು ಹೊರತೆಗೆಯಲು ಮತ್ತು ಏನನ್ನು ಪರಿಶೀಲಿಸಬೇಕೆಂದು ಗುರುತಿಸಲು ದೊಡ್ಡ ಭಾಷಾ ಮಾದರಿಯನ್ನು ಬಳಸುತ್ತದೆ.',
+          desc: 'Satya Finder ಹೇಳಿಕೆಯನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು, ಪ್ರಮುಖ ಸಂಗತಿಗಳನ್ನು ಹೊರತೆಗೆಯಲು ಮತ್ತು ಏನನ್ನು ಪರಿಶೀಲಿಸಬೇಕೆಂದು ಗುರುತಿಸಲು ದೊಡ್ಡ ಭಾಷಾ ಮಾದರಿಯನ್ನು ಬಳಸುತ್ತದೆ.',
         },
         {
           number: '03',
@@ -281,7 +281,7 @@
     <div class="header-inner">
       <div class="logo-block">
         <span class="logo-dot"></span>
-        <span class="logo-text">SatyaFinder</span>
+        <span class="logo-text">Satya Finder</span>
         <span class="logo-kannada">ಸತ್ಯ ಹುಡುಕಿ</span>
       </div>
       <span class="header-tag">{strings.headerTag}</span>

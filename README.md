@@ -1,4 +1,4 @@
-# SatyaFinder
+# Satya Finder
 
 Karnataka Education Circular and News Fact Checker — USAII Global AI Hackathon 2026.
 
