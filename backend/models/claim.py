@@ -9,7 +9,3 @@ from typing import Optional, Literal
 class Claim(BaseModel):
     claim: str
     image: Optional[str] = None
-    
-# The Answer to the clarification questions the model asked
-class Clarification(BaseModel):
-    answer: str
