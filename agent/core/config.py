@@ -11,3 +11,4 @@ MAX_CHAR = 10000 # Max Number of chars to return when running url fetch
 KEY = os.getenv("GROQ_API_KEY") # Groq API Key
 MODEL = "qwen/qwen3.6-27b" # The Model used for agent
 TEMP = 0.7 # The Agent's Temperature
+MAX_ROUNDS = 12  # Hard cap on research loop iterations to prevent runaway loops
