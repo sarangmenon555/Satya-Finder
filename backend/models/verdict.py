@@ -14,5 +14,5 @@ class Response(BaseModel):
     confidence: float | None
     flagged: bool | None = False
     sources: list[str] | None
-    status: Literal['failed', 'completed', 'clarification_needed']
+    status: Literal['failed', 'completed', 'processing']
     time: datetime
