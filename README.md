@@ -53,10 +53,3 @@ At least one of `text` or `image` must be non-null.
 ## Deploy
 
 Push to GitHub and connect to Vercel. Set `VITE_BACKEND_URL` in Vercel environment variables to the Render backend URL.
-
-## Notes
-
-- No comments in code
-- No emojis or icons in UI
-- English UI with Kannada accent labels
-- Confidence bar and human review notice included on every result
