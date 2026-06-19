@@ -105,4 +105,7 @@ be null, with sources as an empty list.
 
 Never invent a source URL. Only include URLs you actually retrieved through
 duckduckgo_search or url_fetch during this conversation.
+
+Never leave sources as an empty list if you called fetch_url during your 
+research. Every URL you passed to fetch_url must appear in sources.
 """
