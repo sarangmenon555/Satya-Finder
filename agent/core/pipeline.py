@@ -1,5 +1,6 @@
 import json
 import re
+from typing import Optional
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from prompts.research import SYSTEM_PROMPT
 from core.config import MAX_ROUNDS
@@ -29,13 +30,27 @@ def _extract_json(text: str) -> dict:
     return json.loads(match.group())
 
 
-def run_pipeline(claim: str) -> dict:
+def _build_human_message(claim: str, image: Optional[str]) -> HumanMessage:
+    if not image:
+        return HumanMessage(content=claim)
+
+    content = []
+    if claim:
+        content.append({"type": "text", "text": claim})
+    content.append({
+        "type": "image_url",
+        "image_url": {"url": image}
+    })
+    return HumanMessage(content=content)
+
+
+def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
     agent = create_agent()
     tool_map = _build_tool_map()
 
     messages = [
         SystemMessage(content=SYSTEM_PROMPT),
-        HumanMessage(content=claim),
+        _build_human_message(claim, image),
     ]
 
     evidence: list[dict] = []

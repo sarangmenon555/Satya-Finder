@@ -209,7 +209,7 @@
   function toBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onload = () => resolve(reader.result);
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
@@ -425,7 +425,7 @@
           </div>
         {/if}
 
-        {#if result.flagged_for_review}
+        {#if result.flagged}
           <div class="flagged-banner" role="alert">
             <span class="flagged-dot"></span>
             {strings.flaggedMsg}
@@ -443,16 +443,16 @@
               <div class="confidence-block">
                 <span class="confidence-label">{strings.confidence}</span>
                 <div class="confidence-bar-track">
-                  <div class="confidence-bar-fill" style="width:{result.confidence}%; background:{vs.border}"></div>
+                  <div class="confidence-bar-fill" style="width:{result.confidence * 100}%; background:{vs.border}"></div>
                 </div>
-                <span class="confidence-value" style="color:{vs.color}">{result.confidence}%</span>
+                <span class="confidence-value" style="color:{vs.color}">{(result.confidence * 100).toFixed(0)}%</span>
               </div>
             {/if}
           </div>
 
           <div class="result-explanation">
             <p class="explanation-label">{strings.whatWeFound}</p>
-            <p class="explanation-text">{result.explanation}</p>
+            <p class="explanation-text">{result.response}</p>
           </div>
 
           {#if result.sources && result.sources.length > 0}

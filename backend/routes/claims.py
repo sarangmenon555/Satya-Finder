@@ -17,8 +17,11 @@ AGENT_URL = os.getenv("AGENT_URL")
 @router.post("/check", response_model=Response)
 async def check_claim(body: Claim) -> Response:
     try:
-        async with httpx.AsyncClient(timeout=60) as client:
-            agent_response = await client.post(f"{AGENT_URL}/verify", json={"claim": body.claim})
+        async with httpx.AsyncClient(timeout=180) as client:
+            payload = {"claim": body.claim}
+            if body.image:
+                payload["image"] = body.image
+            agent_response = await client.post(f"{AGENT_URL}/verify", json=payload)
             agent_response.raise_for_status()
             result = agent_response.json()
     except Exception as e:

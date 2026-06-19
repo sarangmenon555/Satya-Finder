@@ -4,7 +4,9 @@ langchain-community
 langchain-core
 langgraph
 ddgs
+duckduckgo-search
 httpx
 beautifulsoup4
 fastapi
 uvicorn
+python-dotenv
