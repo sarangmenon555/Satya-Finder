@@ -7,8 +7,6 @@ from prompts.research import SYSTEM_PROMPT
 from core.config import MAX_ROUNDS
 from core.agent import create_agent, TOOLS
 
-URL_PATTERN = re.compile(r"https?://[^\s\)\"'>]+")
-
 
 def _build_tool_map() -> dict:
     return {t.name: t for t in TOOLS}
@@ -21,13 +19,7 @@ def _execute_tool(tool_call: dict, tool_map: dict) -> str:
     if fn is None:
         return f"Unknown tool: {name!r}"
     try:
-        result = str(fn.invoke(args))
-        if name == "web_search":
-            urls = URL_PATTERN.findall(result)
-            if urls:
-                url_list = "\n".join(f"- {u}" for u in urls[:5])
-                result = f"{result}\n\nURLs found in results (use these with fetch_url):\n{url_list}"
-        return result
+        return str(fn.invoke(args))
     except Exception as e:
         return f"Tool '{name}' raised: {e}"
 
@@ -60,7 +52,7 @@ def _extract_json(text: str) -> dict:
 
 
 def _parse_text_tool_call(raw: str) -> dict | None:
-    pattern = r"<function=(\w+)\s*\(?\s*(\{.*?\})\s*\)?(?:\s*>|</function>)"
+    pattern = r"<function=(\w+)\s*\(?\s*(\{.*?\})\s*\)?(?:>|</function>)"
     match = re.search(pattern, raw, re.DOTALL)
     if not match:
         return None
