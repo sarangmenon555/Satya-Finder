@@ -52,7 +52,7 @@ def _extract_json(text: str) -> dict:
 
 
 def _parse_text_tool_call(raw: str) -> dict | None:
-    pattern = r"<function=(\w+)\s*\(?\s*(\{.*?\})\s*\)?(?:>|</function>)"
+    pattern = r"<function=(\w+)=?\s*\(?\s*(\{.*?\})\s*\)?(?:\s*>|</function>)"
     match = re.search(pattern, raw, re.DOTALL)
     if not match:
         return None
