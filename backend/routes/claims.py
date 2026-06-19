@@ -1,5 +1,6 @@
 import uuid
 import os
+import asyncio
 import httpx
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
@@ -14,16 +15,31 @@ router = APIRouter(prefix="/api", tags=["claims"])
 AGENT_URL = os.getenv("AGENT_URL")
 
 
+async def _call_agent(payload: dict) -> dict:
+    async with httpx.AsyncClient(timeout=180) as client:
+        for attempt in range(5):
+            try:
+                response = await client.post(f"{AGENT_URL}/verify", json=payload)
+                if response.status_code == 502:
+                    await asyncio.sleep(20)
+                    continue
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 502:
+                    await asyncio.sleep(20)
+                    continue
+                raise
+    raise HTTPException(status_code=503, detail="Agent unavailable after retries.")
+
+
 @router.post("/check", response_model=Response)
 async def check_claim(body: Claim) -> Response:
     try:
-        async with httpx.AsyncClient(timeout=180) as client:
-            payload = {"claim": body.claim}
-            if body.image:
-                payload["image"] = body.image
-            agent_response = await client.post(f"{AGENT_URL}/verify", json=payload)
-            agent_response.raise_for_status()
-            result = agent_response.json()
+        payload = {"claim": body.claim}
+        if body.image:
+            payload["image"] = body.image
+        result = await _call_agent(payload)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {e}")
 
