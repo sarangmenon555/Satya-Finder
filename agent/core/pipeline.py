@@ -1,14 +1,11 @@
 import json
 import re
-import signal
 from typing import Optional
 from groq import BadRequestError
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from prompts.research import SYSTEM_PROMPT
 from core.config import MAX_ROUNDS
 from core.agent import create_agent, TOOLS
-
-PIPELINE_TIMEOUT = 150
 
 
 def _build_tool_map() -> dict:
@@ -83,31 +80,7 @@ def _build_human_message(claim: str, image: Optional[str]) -> HumanMessage:
     return HumanMessage(content=content)
 
 
-def _timeout_handler(signum, frame):
-    raise TimeoutError("Pipeline exceeded maximum allowed time.")
-
-
 def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
-    signal.signal(signal.SIGALRM, _timeout_handler)
-    signal.alarm(PIPELINE_TIMEOUT)
-
-    try:
-        return _run(claim, image)
-    except TimeoutError:
-        return {
-            "status": "failed",
-            "verdict": None,
-            "response": "The pipeline timed out before producing a result.",
-            "confidence": None,
-            "sources": [],
-            "question": None,
-            "evidence": [],
-        }
-    finally:
-        signal.alarm(0)
-
-
-def _run(claim: str, image: Optional[str] = None) -> dict:
     agent = create_agent()
     tool_map = _build_tool_map()
 
