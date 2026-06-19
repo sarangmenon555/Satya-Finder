@@ -52,21 +52,16 @@ def _extract_json(text: str) -> dict:
 
 
 def _parse_text_tool_call(raw: str) -> dict | None:
-    patterns = [
-        r"<function=(\w+)\((\{.*?\})\)\s*>",
-        r"<function=(\w+)\((\{.*?\})\)</function>",
-        r"<function=(\w+)\s+(\{.*?\})\s*>",
-    ]
-    for pattern in patterns:
-        match = re.search(pattern, raw, re.DOTALL)
-        if match:
-            name = match.group(1)
-            try:
-                args = json.loads(_clean_json(match.group(2)))
-            except json.JSONDecodeError:
-                continue
-            return {"name": name, "args": args, "id": "recovered_tool_call"}
-    return None
+    pattern = r"<function=(\w+)\s*\(?\s*(\{.*?\})\s*\)?(?:>|</function>)"
+    match = re.search(pattern, raw, re.DOTALL)
+    if not match:
+        return None
+    name = match.group(1)
+    try:
+        args = json.loads(_clean_json(match.group(2)))
+    except json.JSONDecodeError:
+        return None
+    return {"name": name, "args": args, "id": "recovered_tool_call"}
 
 
 def _recover_from_bad_request(error: BadRequestError) -> dict | None:
