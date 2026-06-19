@@ -227,7 +227,7 @@
       let imageBase64 = null;
       if (imageFile) imageBase64 = await toBase64(imageFile);
       const payload = { text: claimText.trim() || null, image: imageBase64 || null };
-      const response = await fetch(`${BACKEND_URL}/check`, {
+      const response = await fetch(`${BACKEND_URL}/api/check`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
