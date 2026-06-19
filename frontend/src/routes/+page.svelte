@@ -9,6 +9,7 @@
   let isLoading = false;
   let result = null;
   let error = null;
+  let clarification = null;
   let isLight = false;
   let activeStep = 0;
   let lang = 'en';
@@ -69,6 +70,8 @@
       darkLabel: 'Dark',
       langLabel: 'ಕನ್ನಡ',
       headerTag: 'Karnataka Education · Fact Check',
+      clarificationLabel: 'More detail needed',
+      clarificationHint: 'Add the missing detail to your claim above and check again.',
       samples: [
         'Schools are closed on Monday due to flooding in Bengaluru',
         'PU Board has postponed all exams by two weeks',
@@ -135,6 +138,8 @@
       darkLabel: 'Dark',
       langLabel: 'English',
       headerTag: 'Karnataka ಶಿಕ್ಷಣ · Fact Check',
+      clarificationLabel: 'ಹೆಚ್ಚಿನ ವಿವರ ಬೇಕಿದೆ',
+      clarificationHint: 'ಮೇಲಿನ ಹೇಳಿಕೆಗೆ ಕಾಣೆಯಾದ ವಿವರ ಸೇರಿಸಿ ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ.',
       samples: [
         'ಮಳೆಯ ಕಾರಣ ಬೆಂಗಳೂರಿನಲ್ಲಿ ಸೋಮವಾರ ಶಾಲೆಗಳಿಗೆ ರಜೆ',
         'PU ಮಂಡಳಿ ಎಲ್ಲಾ ಪರೀಕ್ಷೆಗಳನ್ನು ಎರಡು ವಾರ ಮುಂದೂಡಿದೆ',
@@ -223,6 +228,7 @@
     isLoading = true;
     result = null;
     error = null;
+    clarification = null;
     try {
       let imageBase64 = null;
       if (imageFile) imageBase64 = await toBase64(imageFile);
@@ -237,8 +243,15 @@
         throw new Error(data.detail || `Server error: ${response.status}`);
       }
       const data = await response.json();
-      if (data.status === 'failed') throw new Error('The server could not process this claim. Please try again.');
-      result = data;
+      if (data.status === 'clarification_needed') {
+        clarification = data.response || data.question;
+      } else if (data.status === 'failed' && data.response) {
+        clarification = data.response;
+      } else if (data.status === 'failed') {
+        throw new Error('The server could not process this claim. Please try again.');
+      } else {
+        result = data;
+      }
     } catch (err) {
       error = err.message || 'Something went wrong. Please try again.';
     } finally {
@@ -255,11 +268,13 @@
     removeImage();
     result = null;
     error = null;
+    clarification = null;
   }
 
   function injectSample(text) {
     claimText = text;
     error = null;
+    clarification = null;
   }
 
   function getVerdictStyle(verdict) {
@@ -365,6 +380,14 @@
             </label>
           {/if}
         </div>
+
+        {#if clarification}
+          <div class="clarification-banner" role="status">
+            <p class="clarification-label">{strings.clarificationLabel}</p>
+            <p class="clarification-text">{clarification}</p>
+            <p class="clarification-hint">{strings.clarificationHint}</p>
+          </div>
+        {/if}
 
         {#if error}
           <div class="error-banner" role="alert">{error}</div>
@@ -940,6 +963,37 @@
 
   .remove-image-btn:hover { opacity: 0.75; }
 
+  .clarification-banner {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 10px;
+    font-family: 'Noto Sans Kannada', 'Inter', sans-serif;
+  }
+
+  .clarification-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #a5b4fc;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .clarification-text {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+
+  .clarification-hint {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
   .error-banner {
     margin-top: 16px;
     padding: 12px 16px;
@@ -1501,6 +1555,15 @@
 
   .light .drop-zone-primary { color: #475569; }
   .light .drop-zone-secondary { color: #94a3b8; }
+
+  .light .clarification-banner {
+    background: rgba(99,102,241,0.05);
+    border-color: rgba(99,102,241,0.2);
+  }
+
+  .light .clarification-label { color: #4f46e5; }
+  .light .clarification-text { color: #1e293b; }
+  .light .clarification-hint { color: #64748b; }
 
   .light .error-banner {
     background: #fef2f2;

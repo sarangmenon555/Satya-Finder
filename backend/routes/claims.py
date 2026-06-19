@@ -46,14 +46,19 @@ async def check_claim(body: Claim) -> Response:
     confidence = result.get("confidence")
     flagged = isinstance(confidence, (int, float)) and confidence * 100 < THRESHOLD
 
+    status = result.get("status", "failed")
+    question = result.get("question")
+    if status == "failed" and question:
+        status = "clarification_needed"
+
     record = Response(
         id=str(uuid.uuid4()),
         verdict=result.get("verdict"),
-        response=result.get("response") or result.get("question"),
+        response=result.get("response") or question,
         confidence=confidence,
         flagged=flagged,
         sources=result.get("sources") or [],
-        status=result.get("status", "failed"),
+        status=status,
         time=datetime.now(timezone.utc),
     )
 
