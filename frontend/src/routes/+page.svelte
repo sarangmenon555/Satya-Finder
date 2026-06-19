@@ -76,6 +76,7 @@
         'Schools are closed on Monday due to flooding in Bengaluru',
         'PU Board has postponed all exams by two weeks',
         'Karnataka government declared a holiday for all schools tomorrow',
+        'Karnataka DSEL issued a new circular in June 2026 changing school timings',
       ],
       hiwSteps: [
         {
@@ -144,6 +145,7 @@
         'ಮಳೆಯ ಕಾರಣ ಬೆಂಗಳೂರಿನಲ್ಲಿ ಸೋಮವಾರ ಶಾಲೆಗಳಿಗೆ ರಜೆ',
         'PU ಮಂಡಳಿ ಎಲ್ಲಾ ಪರೀಕ್ಷೆಗಳನ್ನು ಎರಡು ವಾರ ಮುಂದೂಡಿದೆ',
         'Karnataka ಸರ್ಕಾರ ನಾಳೆ ಎಲ್ಲಾ ಶಾಲೆಗಳಿಗೆ ರಜೆ ಘೋಷಿಸಿದೆ',
+        'Karnataka DSEL ಜೂನ್ 2026 ರಲ್ಲಿ ಶಾಲಾ ಸಮಯ ಬದಲಿಸುವ ಹೊಸ circular ಹೊರಡಿಸಿದೆ',
       ],
       hiwSteps: [
         {
