@@ -2,20 +2,6 @@
 
 Karnataka Education Circular and News Fact Checker — USAII Global AI Hackathon 2026.
 
-## Setup
-
-```bash
-npm install
-cp .env.example .env
-npm run dev
-```
-
-## Environment Variables
-
-| Variable | Description |
-|---|---|
-| `VITE_BACKEND_URL` | URL of the FastAPI backend (e.g. https://satyafinder-backend.onrender.com) |
-
 ## Backend Contract
 
 The frontend POSTs to `POST /check` on the backend.
