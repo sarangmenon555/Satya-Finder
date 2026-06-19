@@ -46,8 +46,10 @@ def _recover_from_bad_request(error: BadRequestError) -> dict | None:
         raw = body.get("error", {}).get("failed_generation", "")
         if not raw:
             return None
+        print(f"FAILED_GENERATION: {raw}", flush=True)
         return _extract_json(raw)
-    except Exception:
+    except Exception as e:
+        print(f"RECOVERY_FAILED: {e}", flush=True)
         return None
 
 
