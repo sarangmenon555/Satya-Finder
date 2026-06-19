@@ -1,11 +1,14 @@
 import json
 import re
+import signal
 from typing import Optional
 from groq import BadRequestError
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from prompts.research import SYSTEM_PROMPT
 from core.config import MAX_ROUNDS
 from core.agent import create_agent, TOOLS
+
+PIPELINE_TIMEOUT = 150
 
 
 def _build_tool_map() -> dict:
@@ -32,10 +35,23 @@ def _clean_json(text: str) -> str:
 
 def _extract_json(text: str) -> dict:
     cleaned = _clean_json(text)
-    match = re.search(r"\{.*\}", cleaned, re.DOTALL)
-    if not match:
-        raise ValueError(f"No JSON object found in model output: {text!r}")
-    return json.loads(match.group())
+    best_error = None
+    for match in re.finditer(r"\{", cleaned):
+        start = match.start()
+        depth = 0
+        for i, ch in enumerate(cleaned[start:], start):
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    candidate = cleaned[start:i + 1]
+                    try:
+                        return json.loads(candidate)
+                    except json.JSONDecodeError as e:
+                        best_error = e
+                    break
+    raise ValueError(f"No valid JSON object found. Last error: {best_error}. Input: {text!r}")
 
 
 def _recover_from_bad_request(error: BadRequestError) -> dict | None:
@@ -67,7 +83,31 @@ def _build_human_message(claim: str, image: Optional[str]) -> HumanMessage:
     return HumanMessage(content=content)
 
 
+def _timeout_handler(signum, frame):
+    raise TimeoutError("Pipeline exceeded maximum allowed time.")
+
+
 def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
+    signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(PIPELINE_TIMEOUT)
+
+    try:
+        return _run(claim, image)
+    except TimeoutError:
+        return {
+            "status": "failed",
+            "verdict": None,
+            "response": "The pipeline timed out before producing a result.",
+            "confidence": None,
+            "sources": [],
+            "question": None,
+            "evidence": [],
+        }
+    finally:
+        signal.alarm(0)
+
+
+def _run(claim: str, image: Optional[str] = None) -> dict:
     agent = create_agent()
     tool_map = _build_tool_map()
 
@@ -79,6 +119,8 @@ def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
     evidence: list[dict] = []
 
     for round_num in range(MAX_ROUNDS):
+        print(f"PIPELINE_ROUND: {round_num + 1}/{MAX_ROUNDS}", flush=True)
+
         try:
             ai_response = agent.invoke(messages)
         except BadRequestError as e:
@@ -116,6 +158,8 @@ def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
             continue
 
         final_text = ai_response.content.strip()
+        print(f"PIPELINE_FINAL_TEXT: {final_text}", flush=True)
+
         try:
             verdict = _extract_json(final_text)
         except (ValueError, json.JSONDecodeError) as e:
