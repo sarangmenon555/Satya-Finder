@@ -24,24 +24,31 @@ def _execute_tool(tool_call: dict, tool_map: dict) -> str:
         return f"Tool '{name}' raised: {e}"
 
 
+def _clean_json(text: str) -> str:
+    text = re.sub(r",\s*([}\]])", r"\1", text)
+    text = re.sub(r"```(?:json)?|```", "", text).strip()
+    return text
+
+
 def _extract_json(text: str) -> dict:
-    cleaned = re.sub(r",\s*([}\]])", r"\1", text)
+    cleaned = _clean_json(text)
     match = re.search(r"\{.*\}", cleaned, re.DOTALL)
     if not match:
         raise ValueError(f"No JSON object found in model output: {text!r}")
     return json.loads(match.group())
 
 
-def _failed_generation_json(error: BadRequestError) -> dict | None:
+def _recover_from_bad_request(error: BadRequestError) -> dict | None:
     try:
         body = error.body
-        if isinstance(body, dict):
-            raw = body.get("error", {}).get("failed_generation", "")
-            if raw:
-                return _extract_json(raw)
+        if not isinstance(body, dict):
+            return None
+        raw = body.get("error", {}).get("failed_generation", "")
+        if not raw:
+            return None
+        return _extract_json(raw)
     except Exception:
-        pass
-    return None
+        return None
 
 
 def _build_human_message(claim: str, image: Optional[str]) -> HumanMessage:
@@ -73,7 +80,7 @@ def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
         try:
             ai_response = agent.invoke(messages)
         except BadRequestError as e:
-            recovered = _failed_generation_json(e)
+            recovered = _recover_from_bad_request(e)
             if recovered:
                 recovered.setdefault("evidence", evidence)
                 return recovered

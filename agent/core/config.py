@@ -7,6 +7,6 @@ TIMEOUT = 20
 REDIRECT = True
 MAX_CHAR = 10000
 KEY = os.getenv("GROQ_API_KEY")
-MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+MODEL = "llama-3.3-70b-versatile"
 TEMP = 0.7
 MAX_ROUNDS = 12
