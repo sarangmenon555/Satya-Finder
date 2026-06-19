@@ -2,7 +2,7 @@ import json
 import re
 from typing import Optional
 from groq import BadRequestError
-from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
+from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage, AIMessage
 from prompts.research import SYSTEM_PROMPT
 from core.config import MAX_ROUNDS
 from core.agent import create_agent, TOOLS
@@ -51,6 +51,18 @@ def _extract_json(text: str) -> dict:
     raise ValueError(f"No valid JSON object found. Last error: {best_error}. Input: {text!r}")
 
 
+def _parse_text_tool_call(raw: str) -> dict | None:
+    match = re.search(r"<function=(\w+)\((\{.*?\})\)", raw, re.DOTALL)
+    if not match:
+        return None
+    name = match.group(1)
+    try:
+        args = json.loads(match.group(2))
+    except json.JSONDecodeError:
+        return None
+    return {"name": name, "args": args, "id": "recovered_tool_call"}
+
+
 def _recover_from_bad_request(error: BadRequestError) -> dict | None:
     try:
         body = error.body
@@ -97,10 +109,31 @@ def run_pipeline(claim: str, image: Optional[str] = None) -> dict:
         try:
             ai_response = agent.invoke(messages)
         except BadRequestError as e:
+            body = e.body if isinstance(e.body, dict) else {}
+            raw = body.get("error", {}).get("failed_generation", "")
+            print(f"FAILED_GENERATION: {raw}", flush=True)
+
+            text_tool_call = _parse_text_tool_call(raw)
+            if text_tool_call:
+                print(f"RECOVERING_TEXT_TOOL_CALL: {text_tool_call['name']}", flush=True)
+                result = _execute_tool(text_tool_call, tool_map)
+                evidence.append({
+                    "round": round_num + 1,
+                    "tool": text_tool_call["name"],
+                    "input": text_tool_call["args"],
+                    "output": result,
+                })
+                messages.append(AIMessage(content=raw))
+                messages.append(
+                    ToolMessage(content=result, tool_call_id=text_tool_call["id"])
+                )
+                continue
+
             recovered = _recover_from_bad_request(e)
             if recovered:
                 recovered.setdefault("evidence", evidence)
                 return recovered
+
             return {
                 "status": "failed",
                 "verdict": None,
