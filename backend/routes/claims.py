@@ -1,12 +1,8 @@
 import uuid
-import sys
 import os
+import httpx
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
-
-AGENT_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "agent")
-if AGENT_PATH not in sys.path:
-    sys.path.insert(0, os.path.abspath(AGENT_PATH))
 
 from models.claim import Claim
 from models.verdict import Response
@@ -15,13 +11,16 @@ from db.repositories.claims import save_claim, get_claims
 
 router = APIRouter(prefix="/api", tags=["claims"])
 
+AGENT_URL = os.getenv("AGENT_URL")
+
 
 @router.post("/check", response_model=Response)
 async def check_claim(body: Claim) -> Response:
-    from core.pipeline import run_pipeline
-
     try:
-        result = run_pipeline(body.claim)
+        async with httpx.AsyncClient(timeout=60) as client:
+            agent_response = await client.post(f"{AGENT_URL}/verify", json={"claim": body.claim})
+            agent_response.raise_for_status()
+            result = agent_response.json()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {e}")
 
