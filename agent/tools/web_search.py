@@ -1,9 +1,11 @@
+# This is the tool that allows the agent to search the web and get relevant results
+# It uses the DuckDuckGo API from Langchain Community
+# This Search is completely free and requires no Key what so ever
+# Importing Necessary Libraries
 from langchain_core.tools import tool
 from langchain_community.tools.ddg_search import DuckDuckGoSearchRun
 
-
 _runner = DuckDuckGoSearchRun()
-
 
 @tool
 def web_search(query: str) -> str:

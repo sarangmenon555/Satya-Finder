@@ -4,12 +4,9 @@ from typing import Optional
 from core.pipeline import run_pipeline
 
 app = FastAPI()
-
-
 class ClaimRequest(BaseModel):
     claim: str
     image: Optional[str] = None
-
 
 @app.post("/verify")
 def verify(request: ClaimRequest):

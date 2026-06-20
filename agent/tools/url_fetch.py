@@ -3,7 +3,6 @@ import httpx
 from bs4 import BeautifulSoup
 from core.config import MAX_CHAR, REDIRECT, TIMEOUT
 
-
 @tool
 def fetch_url(url: str) -> str:
     """Fetch the full main text content of a specific webpage, with navigation,

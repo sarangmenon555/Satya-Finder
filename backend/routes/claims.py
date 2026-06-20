@@ -4,7 +4,6 @@ import asyncio
 import httpx
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
-
 from models.claim import Claim
 from models.verdict import Response
 from core.config import THRESHOLD, LIMIT, SKIP
