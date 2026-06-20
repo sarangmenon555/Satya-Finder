@@ -1,11 +1,7 @@
-# This is The Script that defines Classes that make up the API Structure
-# It includes the things that the Frontend can call to the Backend
-# It mainly includes the Claim, and The Clarification
-# Imporitng Necessary Libraries
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, Literal
 
-# The Claim that the user gives
+
 class Claim(BaseModel):
-    claim: str
-    image: Optional[str] = None
+    claim: str = Field(..., min_length=1, max_length=2000)
+    image: Optional[str] = Field(default=None, max_length=8000000)

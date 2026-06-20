@@ -14,6 +14,9 @@ router = APIRouter(prefix="/api", tags=["claims"])
 
 AGENT_URL = os.getenv("AGENT_URL")
 
+if not AGENT_URL:
+    raise RuntimeError("AGENT_URL environment variable is not set")
+
 
 async def _call_agent(payload: dict) -> dict:
     async with httpx.AsyncClient(timeout=180) as client:

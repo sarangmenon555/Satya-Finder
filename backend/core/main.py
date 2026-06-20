@@ -6,12 +6,13 @@ app = FastAPI(title="Rumor vs. Reality API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
+    allow_origins=["https://satya-finder.vercel.app"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
 app.include_router(router)
+
 
 @app.get("/health")
 async def health():
